@@ -4,18 +4,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyl.springBootDemo.modules.test.vo.ConfigBean;
 
-@RestController
+@Controller
 @RequestMapping("/test")
 public class TestController {
 	
 	private final static Logger LOGGER = LoggerFactory.getLogger(TestController.class);
 	
 	@RequestMapping("/demoInfo")
+	@ResponseBody
 	public String demoDesc() {
 		return "这是一次成功的操作";
 	}
@@ -35,6 +38,7 @@ public class TestController {
 	private ConfigBean configBean;
 	
 	@RequestMapping("/config")
+	@ResponseBody
 	public String configTest() {
 		//获得全局配置的值
 		StringBuffer sb = new StringBuffer();
@@ -54,6 +58,7 @@ public class TestController {
 		
 	}
 	    @RequestMapping("/log")
+	    @ResponseBody
 	    public String logTest() {
 			LOGGER.trace("This is trace log.");
 			LOGGER.debug("This is debug log.");
@@ -63,4 +68,10 @@ public class TestController {
 	    	return "This is log test.";
 	    	
 	    }
+	    
+	    @RequestMapping("/index")
+		public String testIndexPage(ModelMap modelMap) {
+			modelMap.addAttribute("template", "test/index");
+			return "index";
+		}
 }
