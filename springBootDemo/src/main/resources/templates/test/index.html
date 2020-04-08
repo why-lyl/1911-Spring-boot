@@ -9,7 +9,7 @@ This is test module page.这是测试模板页面。
 		<button type="submit">上传</button>
 	</form>
 <hr>
-<p>====================================================================</p>
+<p>===========================上传展示================================</p>
 	<h3>th:text</h3>
 	<h1 th:text="${thymeleafTitle}"></h1>
 	<p th:text="${thymeleafTitle}"></p>
@@ -36,7 +36,7 @@ This is test module page.这是测试模板页面。
 <hr>
 <h3>th:object</h3>
 	<div th:object="${country}">
-	    <p th:text="*{countryId}">countryId</p><!-- 给定了如${country}时，且在div内才能使用* -->
+	    <p th:text="*{countryId}">countryId</p><!-- 给定了如th:object="${country}"时，且在div内才能使用* -->
 	    <p th:text="*{countryName}">countryName</p>
 	    <p th:text="${country.countryCode}">countryCode</p>
 	</div>
