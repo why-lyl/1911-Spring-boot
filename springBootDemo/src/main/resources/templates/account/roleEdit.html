@@ -1,0 +1,40 @@
+<div id="roleEditModal" class="modal fade" tabindex="-1" th:fragment="roleEdit">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="collegeEditLabel"
+					style="font-size: 18px; font-weight: 500;">权限信息修改</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+				    <!-- 1 -->
+					<div class="form-group row">
+						<label class="control-label col-md-3">权限等级</label>
+						<div class="col-md-8">
+							<input id="roleIdForEditPage" class="form-control" 
+								type="text" placeholder="请输入要修改的权限等级" readonly>
+						</div>
+					</div>
+					<!-- 2 -->
+					<div class="form-group row">
+						<label class="control-label col-md-3">权限角色名</label>
+						<div class="col-md-8">
+							<input id="roleNameForEditPage" class="form-control" 
+								type="text" placeholder="请输入要修改的权限角色名">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<!-- data-dismiss="modal"关闭模态框 -->
+				<a class="btn btn-secondary" href="#" data-dismiss="modal">
+					<i class="fa fa-fw fa-lg fa-times-circle"></i>退出
+				</a>
+				<button name="collegeEditBtn" data-dismiss="modal" 
+					class="btn btn-primary" type="button" onclick="editRole();">
+					<i class="fa fa-fw fa-lg fa-check-circle"></i>确认
+				</button>
+			</div>
+		</div>
+	</div><!-- /.modal-dialog -->
+</div>

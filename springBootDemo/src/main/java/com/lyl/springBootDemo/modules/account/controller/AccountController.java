@@ -29,5 +29,33 @@ public class AccountController {
 		
 		return "index";
 	}
+	
+	/**
+	 * 127.0.0.1:8688/account/users
+	 * https://127.0.0.1:8868/account/users
+	 */
+	@RequestMapping("/users")
+	public String usersPage() {
+		return "index";
+	}
+	
+	/**
+	 * 127.0.0.1:8688/account/roles
+	 * https://127.0.0.1:8868/account/roles
+	 */
+	@RequestMapping("/roles")
+	public String rolesPage() {
+		return "index";
+	}
+	
+	/**
+	 * 127.0.0.1:8688/account/resources
+	 * https://127.0.0.1:8868/account/resources
+	 */
+	@RequestMapping("/resources")
+	public String resourcesPage() {
+		return "index";
+	}
+
 
 }

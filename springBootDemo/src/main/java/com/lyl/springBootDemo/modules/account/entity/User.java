@@ -26,7 +26,7 @@ public class User implements Serializable {
 	private int userId;
 	private String userName;
 	private String password;
-	private Date createDate;
+	private String createDate;//此处将Date类型变为了String类型，方便之后将new Date()格式化
 	
 	@Transient
 	private String account;
@@ -59,11 +59,11 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 

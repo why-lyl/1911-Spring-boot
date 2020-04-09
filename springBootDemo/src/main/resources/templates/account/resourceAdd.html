@@ -1,0 +1,48 @@
+<div id="resourceAddModal" class="modal fade" tabindex="-1" th:fragment="resourceAdd">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="collegeAddLabel"
+					style="font-size: 18px; font-weight: 500;">添加资源</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+				<!-- 1 -->
+					<div class="form-group row">
+						<label class="control-label col-md-3">资源标志符</label>
+						<div class="col-md-8">
+							<input id="resourceUriForAddPage" class="form-control" 
+								type="text" placeholder="请输入要添加的资源标志符">
+						</div>
+					</div>
+					<!-- 2 -->
+					<div class="form-group row">
+						<label class="control-label col-md-3">资源名</label>
+						<div class="col-md-8">
+							<input id="resourceNameForAddPage" class="form-control" 
+								type="text" placeholder="请输入要添加的资源名">
+						</div>
+					</div>
+					<!-- 3 -->
+					<div class="form-group row">
+						<label class="control-label col-md-3">许可证</label>
+						<div class="col-md-8">
+							<input id="permissionForAddPage" class="form-control" 
+								type="text" placeholder="请输入要添加的许可证">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<!-- data-dismiss="modal"关闭模态框 -->
+				<a class="btn btn-secondary" href="#" data-dismiss="modal">
+					<i class="fa fa-fw fa-lg fa-times-circle"></i>退出
+				</a>
+				<button name="collegeAddBtn" data-dismiss="modal" 
+					class="btn btn-primary" type="button" onclick="addResource();">
+					<i class="fa fa-fw fa-lg fa-check-circle"></i>确认
+				</button>
+			</div>
+		</div>
+	</div><!-- /.modal-dialog -->
+</div>
