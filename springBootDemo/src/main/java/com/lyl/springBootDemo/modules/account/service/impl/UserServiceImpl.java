@@ -88,30 +88,15 @@ public class UserServiceImpl implements UserService {
 	}
     
 	@Override
-	public Result addtUser(User user) {
+	public Result addUser(User user) {
 		Result result = new Result(ResultStatus.SUCCESS.status, "");
 		User userTemp = userDao.getUserByUserName(user.getUserName());
-     
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd"); //将new Date()格式化为更易接受的格式且转换为字符串
-		String time = df.format(new Date());
-		user.setCreateDate(time);
-		user.setPassword(MD5Util.getMD5(user.getPassword()));
-		userDao.insertUser(user);
 		
-		List<Role> roles = user.getRoles();
-	       
-		if (roles != null) {
-			userRoleDao.deleteUserRoleByUserId(user.getUserId());
-			for (Role role : roles) {//此处的顺序需要注意，要完成user的插入操作后才进行中间表的添加，不然中间表中的user-id会为0
-				userRoleDao.addUserRole(role.getRoleId(), user.getUserId());
-			}
-		}
-		
-		if (user.getUserName() == "") {
+		if (user.getUserName() == "" || user.getUserName() ==null) {
 			result.setStatus(ResultStatus.FAILED.status);
 			result.setMessage("请输入用户名");
 			return result;
-		}else if (user.getPassword() == "") {
+		}else if (user.getPassword() == "" || user.getPassword() ==null) {
 			result.setStatus(ResultStatus.FAILED.status);
 			result.setMessage("请输入登录密码");
 			return result;
@@ -121,12 +106,25 @@ public class UserServiceImpl implements UserService {
 			return result;
 		}
 		
-		if(roles.isEmpty()) {//此处设置为选择权限时，会弹出弹窗
-        	result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage("请至少选择一个权限");
-			return result;
-		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd"); //将new Date()格式化为更易接受的格式且转换为字符串
+		String time = df.format(new Date());
+		user.setCreateDate(time);
+		user.setPassword(MD5Util.getMD5(user.getPassword()));
+		userDao.insertUser(user);
 		
+		List<Role> roles = user.getRoles();
+		
+		if(!roles.isEmpty()) {
+			userRoleDao.deleteUserRoleByUserId(user.getUserId());
+			for (Role role : roles) {//此处的顺序需要注意，要完成user的插入操作后才进行中间表的添加，不然中间表中的user-id会为0
+				userRoleDao.addUserRole(role.getRoleId(), user.getUserId());
+			}
+		}else {//此处可拓展为至少选择2个或多个选项，用else if 来实现
+			//userRoleDao.deleteUserRoleByUserId(user.getUserId());(resource.getResourceId());//user为空时可删除中间表的所有有关信息
+			//若是至少需要一个权限，则为空时提醒至少选择一个权限
+			result.setStatus(ResultStatus.FAILED.status);
+			result.setMessage("请至少选择一个权限");
+		}
 		return result;
 	}
 	

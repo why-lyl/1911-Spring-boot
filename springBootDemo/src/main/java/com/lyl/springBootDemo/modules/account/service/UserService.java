@@ -9,7 +9,7 @@ public interface UserService {
 	
 	Result insertUser(User user);
 	
-	Result addtUser(User user);
+	Result addUser(User user);
 	
 	User getUserByUserName(String userName);
 	
