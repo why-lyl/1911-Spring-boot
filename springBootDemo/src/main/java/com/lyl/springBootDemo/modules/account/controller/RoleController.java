@@ -1,7 +1,5 @@
 package com.lyl.springBootDemo.modules.account.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,11 +45,6 @@ public class RoleController {
 	@DeleteMapping("/role/{roleId}")
 	public Result deleteRole(@PathVariable int roleId) {
 		return roleService.deleteRole(roleId);
-	}
-	
-	@RequestMapping("/roles")
-	public List<Role> getRoles() {
-		return roleService.getRoles();
 	}
 
 }

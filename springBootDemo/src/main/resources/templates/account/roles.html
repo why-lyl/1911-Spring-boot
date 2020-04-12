@@ -285,7 +285,7 @@ function initEditModal(roleId) {
 function editRole() {
 	var role = {};
 	role.roleId = $("#roleIdForEditPage").val();
-	role.roleName = $("#roleNameForEditPage").val();
+	role.userName = $("#roleNameForEditPage").val();
 	
 	$.ajax({
 		url : "/api/role",

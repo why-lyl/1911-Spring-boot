@@ -1,8 +1,6 @@
 package com.lyl.springBootDemo.modules.account.service;
 
 
-import java.util.List;
-
 import com.github.pagehelper.PageInfo;
 import com.lyl.springBootDemo.modules.account.entity.Resource;
 import com.lyl.springBootDemo.modules.common.vo.Result;
@@ -21,9 +19,5 @@ public interface ResourceService {
 	Result updateResource(Resource resource);
 	
 	Result deleteResource(int resourceId);
-	
-    List<Resource> getResourcesByRoleId(int roleId);
-	
-	Resource getResourceById(int resourceId);
 
 }

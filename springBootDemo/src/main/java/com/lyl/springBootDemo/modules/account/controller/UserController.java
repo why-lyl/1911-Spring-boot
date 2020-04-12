@@ -27,14 +27,9 @@ public class UserController {
 		return userService.insertUser(user);
 	}
 	
-	@PostMapping(value = "/addUser", consumes = "application/json")
-	public Result addUser(@RequestBody User user) {
-		return userService.addtUser(user);
-	}
-	
 	@PostMapping(value="/login", consumes="application/json")
 	public Result getUser(@RequestBody User user) {
-		return userService.login(user);
+		return userService.getUser(user);
 	}
 	
 	@PostMapping(value="/users", consumes="application/json")

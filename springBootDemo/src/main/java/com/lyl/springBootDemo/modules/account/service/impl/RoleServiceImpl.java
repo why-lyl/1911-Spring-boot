@@ -27,9 +27,10 @@ public class RoleServiceImpl implements RoleService {
 	public Result insertRole(Role role) {
 		Result result = new Result(ResultStatus.SUCCESS.status, "");
 		
-		if (role.getRoleName() == "") {
+		Role roleTemp = roleDao.getRoleByRoleName(role.getRoleName());
+		if (roleTemp != null) {
 			result.setStatus(ResultStatus.FAILED.status);
-			result.setMessage("请输入权限角色名");
+			result.setMessage("role name is repeat.");
 			return result;
 		}
 		
@@ -87,21 +88,7 @@ public class RoleServiceImpl implements RoleService {
 		}
 		return result;
 	}
-
-	@Override
-	public List<Role> getRoles() {
-		return roleDao.getRoles();
-	}
 	
-	@Override
-	public List<Role> getRolesByUserId(int userId) {
-		return roleDao.getRolesByUserId(userId);
-	}
-
-	@Override
-	public List<Role> getRolesByResourceId(int resourceId) {
-		return roleDao.getRolesByResourceId(resourceId);
-	}
 
 
 }

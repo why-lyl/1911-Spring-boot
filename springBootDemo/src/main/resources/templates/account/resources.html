@@ -232,33 +232,10 @@ function TData(resourceId, resourceUri, resourceName, permission) {
 	}
 }
 
-//初始化设置
 function initAddModal() {
-	
 	$("#resourceUriForAddPage").val("");
 	$("#resourceNameForAddPage").val("");
 	$("#permissionForAddPage").val("");
-	
-	//初始化选择框
-	$("#resourcesForRoleAdd").empty();
-	$.ajax({
-		url : "/api/roles",
-		type : "get",
-		contentType: "application/json",
-		success : function (rs) {
-			$("#resourcesForRoleAdd").append("<label class='middle'>");
-			$.each(rs, function(i, value) {
-				$("#resourcesForRoleAdd").append("<input name='roleCheckboxForResourceAdd' value='" + 
-						value.roleId +"' class='ace' type='checkbox'style='position:inherit;left:10px'>");
-				$("#resourcesForRoleAdd").append("<span class='lbl'>" + 
-						value.roleName + "</span>&nbsp;");
-			});
-			$("#resourcesForRoleAdd").append("</label>");
-		},
-		error : function (data) {
-			layer.alert(data.responseText, {icon: 0});
-		}
-	});
 }
 
 function addResource() {
@@ -266,16 +243,6 @@ function addResource() {
 	resource.resourceUri = $("#resourceUriForAddPage").val();
 	resource.resourceName = $("#resourceNameForAddPage").val();
 	resource.permission = $("#permissionForAddPage").val();
-	
-	var roles = new Array();
-	$.each($("input[name='roleCheckboxForResourceAdd']"), function(){
-		if(this.checked){
-			var role = {};
-			role.roleId = $(this).val();
-			roles.push(role);
-		}
-	});
-	resource.roles = roles;
 	
 	$.ajax({
 		url : "/api/addResource",
@@ -298,28 +265,6 @@ function addResource() {
 
 //初始化
 function initEditModal(resourceId) {
-	
-	//初始化选择框
-	$("#resourcesForRoleEdit").empty();
-	$.ajax({
-		url : "/api/roles",
-		type : "get",
-		contentType: "application/json",
-		success : function (rs) {
-			$("#resourcesForRoleEdit").append("<label class='middle'>");
-			$.each(rs, function(i, value) {
-				$("#resourcesForRoleEdit").append("<input name='roleCheckboxForResourceEdit' value='" + 
-						value.roleId +"' class='ace' type='checkbox'style='position:inherit;left:10px'>");
-				$("#resourcesForRoleEdit").append("<span class='lbl'>" + 
-						value.roleName + "</span>&nbsp;");
-			});
-			$("#resourcesForRoleEdit").append("</label>");
-		},
-		error : function (data) {
-			layer.alert(data.responseText, {icon: 0});
-		}
-	});
-	
 	$.ajax({
 		url : "/api/resource/" + resourceId,
 		type : "get",
@@ -327,17 +272,11 @@ function initEditModal(resourceId) {
 		success : function (rs) {
 			$("#resourceIdForEditPage").val(rs.resourceId);
 			$("#resourceNameForEditPage").val(rs.resourceName);
-			$.each(rs.roles, function(i, item){
-				$("input[name='roleCheckboxForResourceEdit'][value=" + item.roleId + "]")
-					.attr("checked","checked");
-			});
 		},
 		error : function (data) {
 			layer.alert(data.responseText, {icon: 0});
 		}
 	});
-	
-	
 }
 
 //编辑修改
@@ -345,17 +284,6 @@ function editResource() {
 	var resource = {};
 	resource.resourceId = $("#resourceIdForEditPage").val();
 	resource.resourceName = $("#resourceNameForEditPage").val();
-	
-	var roles = new Array();
-	$.each($("input[name='roleCheckboxForResourceEdit']"), function(){
-		if(this.checked){
-			var role = {};
-			role.roleId = $(this).val();
-			roles.push(role);
-		}
-	});
-	
-	resource.roles = roles;
 	
 	$.ajax({
 		url : "/api/resource",

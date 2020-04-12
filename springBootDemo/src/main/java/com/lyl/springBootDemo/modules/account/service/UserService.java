@@ -9,13 +9,9 @@ public interface UserService {
 	
 	Result insertUser(User user);
 	
-	Result addtUser(User user);
-	
 	User getUserByUserName(String userName);
 	
-	Result login(User user);
-	
-	void logout();
+	Result getUser(User user);
 	
     PageInfo<User> getUsersBySearchVo(SearchVo searchVo);
 	
