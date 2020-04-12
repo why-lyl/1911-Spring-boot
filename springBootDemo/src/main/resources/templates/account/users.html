@@ -20,14 +20,6 @@
 		<li class="active">用户</li>
 	</ul><!-- /.breadcrumb -->
 
-	<div class="nav-search" id="nav-search">
-		<form class="form-search">
-			<span class="input-icon">
-				<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-				<i class="ace-icon fa fa-search nav-search-icon"></i>
-			</span>
-		</form>
-	</div><!-- /.nav-search -->
 </div>
 <div class="page-content">
 	<div class="ace-settings-container" id="ace-settings-container">
@@ -122,6 +114,7 @@
 			<div class="clearfix">
 				<div class="pull-right tableTools-container"></div>
 	</div>
+	          <div>
 				<table id="usersTable" 
 					class="table table-hover table-bordered">
 					<thead>
@@ -240,8 +233,33 @@ function TData(userId, userName, password, createDate) {
 }
 
 function initAddModal() {
+	
+	//初始化输入框的值为val里的字符串或获得的值
 	$("#userNameForAddPage").val("");
 	$("#passwordForAddPage").val("");
+	
+	//初始化选择框
+	$("#rolesForUserAdd").empty();
+	$.ajax({
+		url : "/api/roles",
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			$("#rolesForUserAdd").append("<label class='middle'>");
+			$.each(rs, function(i, value) {
+				$("#rolesForUserAdd").append("<input name='roleCheckboxForUserAdd' value='" + 
+						value.roleId +"' class='ace' type='checkbox'style='position:inherit;left:10px'>");
+				$("#rolesForUserAdd").append("<span class='lbl'>" + 
+						value.roleName + "</span>&nbsp;");
+			});
+			$("#rolesForUseAdd").append("</label>");
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+	
+	
 }
 
 function addUser() {
@@ -249,8 +267,20 @@ function addUser() {
 	user.userName = $("#userNameForAddPage").val();
 	user.password = $("#passwordForAddPage").val();
 	
+	
+	var roles = new Array();
+	$.each($("input[name='roleCheckboxForUserAdd']"), function(){
+		if(this.checked){
+			var role = {};
+			role.roleId = $(this).val();
+			roles.push(role);
+		}
+	});
+	user.roles = roles;
+	
+	//添加用户
 	$.ajax({
-		url : "/api/register",
+		url : "/api/addUser",
 		type : "post",
 		contentType: "application/json",
 		data : JSON.stringify(user),
@@ -268,6 +298,27 @@ function addUser() {
 }
 
 function initEditModal(userId) {
+	//初始化选择框
+	$("#rolesForUserEdit").empty();
+	$.ajax({
+		url : "/api/roles",
+		type : "get",
+		contentType: "application/json",
+		success : function (rs) {
+			$("#rolesForUserEdit").append("<label class='middle'>");
+			$.each(rs, function(i, value) {
+				$("#rolesForUserEdit").append("<input name='roleCheckboxForUserEdit' value='" + 
+						value.roleId +"' class='ace' type='checkbox' style='position:inherit;left:10px'>");
+				$("#rolesForUserEdit").append("<span class='lbl'>" + 
+						value.roleName + "</span>&nbsp;");
+			});
+			$("#rolesForUserEdit").append("</label>");
+		},
+		error : function (data) {
+			layer.alert(data.responseText, {icon: 0});
+		}
+	});
+	
 	$.ajax({
 		url : "/api/user/" + userId,
 		type : "get",
@@ -275,6 +326,10 @@ function initEditModal(userId) {
 		success : function (rs) {
 			$("#userIdForEditPage").val(rs.userId);
 			$("#userNameForEditPage").val(rs.userName);
+			$.each(rs.roles, function(i, item){
+				$("input[name='roleCheckboxForUserEdit'][value=" + item.roleId + "]")
+					.attr("checked","checked");
+			});
 		},
 		error : function (data) {
 			layer.alert(data.responseText, {icon: 0});
@@ -283,9 +338,21 @@ function initEditModal(userId) {
 }
 
 function editUser() {
+	
 	var user = {};
 	user.userId = $("#userIdForEditPage").val();
 	user.userName = $("#userNameForEditPage").val();
+	
+	var roles = new Array();
+	$.each($("input[name='roleCheckboxForUserEdit']"), function(){
+		if(this.checked){
+			var role = {};
+			role.roleId = $(this).val();
+			roles.push(role);
+		}
+	});
+	
+	user.roles = roles;
 	
 	$.ajax({
 		url : "/api/user",
