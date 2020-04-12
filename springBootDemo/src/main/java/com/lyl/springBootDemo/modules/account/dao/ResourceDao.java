@@ -3,8 +3,11 @@ package com.lyl.springBootDemo.modules.account.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -35,6 +38,13 @@ public interface ResourceDao {
 		
 		//根据id查出资源信息
 		@Select("select * from m_resource where resource_id = #{resourceId}")
+		@Results(id="resourceResult", value={
+				@Result(column="resource_id", property="resourceId"),
+				@Result(column="resource_id",property="roles",
+						javaType=List.class,
+						many=@Many(select="com.lyl.springBootDemo.modules.account.dao."
+								+ "RoleDao.getRolesByResourceId"))
+			})
 		Resource getResourceByResourceId(int resourceId);
 		
 		//查询分页
@@ -68,5 +78,18 @@ public interface ResourceDao {
 		//根据id删除resource的信息
 		@Select("delete from m_resource where resource_id=#{resourceId}")
 		void deleteResource(int resourceId);
+		
+		//根据id查出resource的名字
+		@Select("select resource_name from m_resource where resource_id = #{resourceId}")
+		String getResourceNameByResourceId(int resourceId);
+		
+		//得到resource的信息集合
+		@Select("select * from m_resource")
+		List<Resource> getResources();
+		
+		//根据role Id 获得resource信息
+		@Select("select * from m_resource resource left join m_role_resource roleResource on "
+				+ "resource.resource_id = roleResource.resource_id where roleResource.role_id = #{roleId}")
+		List<Resource> getResourcesByRoleId(int roleId);
 
 }

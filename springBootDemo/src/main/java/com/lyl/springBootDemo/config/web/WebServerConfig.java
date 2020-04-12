@@ -1,4 +1,4 @@
-package com.lyl.springBootDemo.config;
+package com.lyl.springBootDemo.config.web;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

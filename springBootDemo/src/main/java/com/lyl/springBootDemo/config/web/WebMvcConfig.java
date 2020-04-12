@@ -1,4 +1,4 @@
-package com.lyl.springBootDemo.config;
+package com.lyl.springBootDemo.config.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;

@@ -1,12 +1,17 @@
 package com.lyl.springBootDemo.modules.account.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.lyl.springBootDemo.modules.account.service.UserService;
 
 @Controller
 @RequestMapping("/account")
 public class AccountController {
 	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 127.0.0.1:8688/account/login
@@ -17,6 +22,15 @@ public class AccountController {
 		
 		return "indexSimple";
 		
+	}
+	
+	/**
+	 * 用户退出登录
+	 */
+	@RequestMapping("/logout")
+	public String logout() {
+		userService.logout();
+		return "redirect:/account/login";
 	}
 	
 	
